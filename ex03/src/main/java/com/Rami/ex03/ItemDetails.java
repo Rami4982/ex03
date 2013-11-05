@@ -9,6 +9,19 @@ public class ItemDetails
     private String btnText;
     private String price;
 
+    public ItemDetails ()
+    {
+        this.name = "";
+        this.btnText = "";
+        this.price = "";
+    }
+    public ItemDetails (String name, String btnText, String price)
+    {
+        this.name = name;
+        this.btnText = btnText;
+        this.price = price;
+    }
+
     public String getName () { return name; }
 
     public void setName (String name)

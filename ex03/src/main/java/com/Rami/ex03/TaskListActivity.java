@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ import static java.util.Arrays.asList;
 
 public class TaskListActivity extends Activity
 {
+    //Context context=getApplicationContext();
+
     /**
      * Called when the activity is first created.
      */
@@ -27,41 +30,24 @@ public class TaskListActivity extends Activity
         setContentView(R.layout.main);
 
         final ListView listView = (ListView) findViewById(R.id.listV_main);
-        listView.setAdapter(new ItemListBaseAdapter(this, getItems()));
+        Connect_DB connectorDB = Connect_DB.getInstance(this);
+        if(connectorDB.getSize()==0)
+            connectorDB.addItem(new ItemDetails("enter todo activities","done","50"));
+else
+            connectorDB.deleteInstruction();
+        listView.setAdapter(new ItemListBaseAdapter(this, connectorDB.getItems() ));
         Button addBtn = (Button) findViewById(R.id.add_Btn);
         addBtn.setOnClickListener(new View.OnClickListener()
         {
             public void onClick (View v)
             {
+
                 startActivity(new Intent(TaskListActivity.this, CreateTaskActivity.class));
             }
         });
+
+//        Toast.makeText(this,"ss",Toast.LENGTH_LONG).show();
     }
 
-    private ArrayList<ItemDetails> getItems ()
-    {
-        ArrayList<ItemDetails> results = new ArrayList<ItemDetails>();
-        //ArrayList<String> toDoListArr = new ArrayList<String>[]{"sss"};
-        List<String> toDoListArr = asList("study for exam", "write research paper.", "Find a new dentist", "Learn Italian", "Learn Italian", "Mock task 1", "Upgrade website", "Pizza", "follow-up", "Mock task 2",
-                "leave the office", "don't write down");
 
-        ItemDetails itemDetails = null;
-
-        for (String temp : toDoListArr)
-        {
-            itemDetails = new ItemDetails();
-            itemDetails.setName(temp);
-            itemDetails.setbtnText("Done");
-            results.add(itemDetails);
-        }
-        for (String temp : toDoListArr)
-        {
-            itemDetails = new ItemDetails();
-            itemDetails.setName(temp);
-            itemDetails.setbtnText("Done");
-            results.add(itemDetails);
-        }
-
-        return results;
-    }
 }
