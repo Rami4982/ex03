@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ListViewDemo</string>
+    <string name="add_Btn">Add Task</string>
+    <string name="edit_message">Description</string>
+    <string name="create_Btn">Create</string>
+
+
+
+</resources>
