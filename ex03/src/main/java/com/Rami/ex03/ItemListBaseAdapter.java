@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by pc on 05/11/13.
@@ -17,13 +18,15 @@ import android.widget.TextView;
 public class ItemListBaseAdapter extends BaseAdapter
 {
     private static ArrayList<ItemDetails> itemDetailsrrayList;
-
+    private  Context context;
     private LayoutInflater l_Inflater;
 
     public ItemListBaseAdapter (Context context, ArrayList<ItemDetails> results)
     {
         itemDetailsrrayList = results;
         l_Inflater = LayoutInflater.from(context);
+        this.context=context;
+
     }
 
     public int getCount ()
@@ -50,13 +53,21 @@ public class ItemListBaseAdapter extends BaseAdapter
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.name);
             holder.tvbtnText = (Button) convertView.findViewById(R.id.Done_Btn);
+
             convertView.setTag(holder);
         }
         else
         {
             holder = (ViewHolder) convertView.getTag();
         }
+        holder.tvbtnText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
 
+                Toast.makeText( context,"ss",10 ).show();
+            }
+        });
         holder.tvName.setText(itemDetailsrrayList.get(position).getName());
 //        holder.tvbtnText.setText(R.id.Done_Btn);
         holder.tvbtnText.setText(itemDetailsrrayList.get(position).getbtnText());
