@@ -30,6 +30,18 @@ public class Connect_DB
             itemsArr.remove(0);
 
     }
+    public ItemDetails getElm(int position)
+    {
+        // if (itemsArr.get(0).getName().equals("enter todo activities"))
+        return itemsArr.get(position);
+
+    }
+    public void deleteElm(int position)
+    {
+       // if (itemsArr.get(0).getName().equals("enter todo activities"))
+            itemsArr.remove(position);
+
+    }
 
     public void addItem (ItemDetails ItemP)
     {

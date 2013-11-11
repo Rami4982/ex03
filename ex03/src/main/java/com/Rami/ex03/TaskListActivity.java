@@ -35,7 +35,7 @@ public class TaskListActivity extends Activity
             connectorDB.addItem(new ItemDetails("enter todo activities","done","50"));
 else
             connectorDB.deleteInstruction();
-        listView.setAdapter(new ItemListBaseAdapter(this, connectorDB.getItems() ));
+        listView.setAdapter(new ItemListBaseAdapter(this ));
         Button addBtn = (Button) findViewById(R.id.add_Btn);
         addBtn.setOnClickListener(new View.OnClickListener()
         {
