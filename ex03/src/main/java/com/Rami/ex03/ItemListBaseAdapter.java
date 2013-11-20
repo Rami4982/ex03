@@ -10,30 +10,34 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by pc on 05/11/13.
  */
 public class ItemListBaseAdapter extends BaseAdapter
 {
-    private static ArrayList<ItemDetails> itemDetailsrrayList;
-
+//    private static ArrayList<ItemDetails> itemDetailsrrayList;
+    private  Context context;
     private LayoutInflater l_Inflater;
-
-    public ItemListBaseAdapter (Context context, ArrayList<ItemDetails> results)
+private Connect_DB connectorDB=null;
+    public ItemListBaseAdapter (Context context)
     {
-        itemDetailsrrayList = results;
+         connectorDB = Connect_DB.getInstance(context);
+      //  itemDetailsrrayList=;
         l_Inflater = LayoutInflater.from(context);
+        this.context=context;
+
     }
 
     public int getCount ()
     {
-        return itemDetailsrrayList.size();
+        return connectorDB.getItems().size();
     }
 
     public Object getItem (int position)
     {
-        return itemDetailsrrayList.get(position);
+        return connectorDB.getItems().get(position);
     }
 
     public long getItemId (int position)
@@ -43,6 +47,7 @@ public class ItemListBaseAdapter extends BaseAdapter
 
     public View getView (int position, View convertView, ViewGroup parent)
     {
+        final int positionFinal = position;
         ViewHolder holder;
         if (convertView == null)
         {
@@ -50,16 +55,25 @@ public class ItemListBaseAdapter extends BaseAdapter
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.name);
             holder.tvbtnText = (Button) convertView.findViewById(R.id.Done_Btn);
+
             convertView.setTag(holder);
         }
         else
         {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        holder.tvName.setText(itemDetailsrrayList.get(position).getName());
+        holder.tvbtnText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                //Toast.makeText( context,"dd "+positionFinal ,10 ).show();//
+                connectorDB.deleteElm(positionFinal);
+                notifyDataSetChanged();
+            }
+        });
+        holder.tvName.setText(connectorDB.getElm(position).getName());
 //        holder.tvbtnText.setText(R.id.Done_Btn);
-        holder.tvbtnText.setText(itemDetailsrrayList.get(position).getbtnText());
+        holder.tvbtnText.setText(connectorDB.getElm(position).getbtnText());
 
         return convertView;
     }
